@@ -19,7 +19,17 @@ function onConnection(ws, req) {
 module.exports = (server) => {
     const wss = new WebSocket.Server({server});
     wss.on('connection', onConnection);
+    wss.broadcast = broadcast;
 
     console.log(`WebSocket Server is running on port ${server.address().port}`);
     return wss;
+}
+
+function broadcast(jsonObject) {
+    if(!this.clients) return;
+    this.clients.forEach(client => {
+        if (client.readyState === WebSocket.OPEN) {
+            client.send(JSON.stringify(jsonObject));
+        }
+    });
 }
