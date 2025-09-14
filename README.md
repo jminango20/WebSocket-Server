@@ -88,14 +88,4 @@ wss.broadcast({ type: "notification", message: "Hello everyone!" });
 
 ---
 
-## Dependencies
 
-* [express](https://www.npmjs.com/package/express)
-* [ws](https://www.npmjs.com/package/ws)
-* [helmet](https://www.npmjs.com/package/helmet)
-* [cors](https://www.npmjs.com/package/cors)
-* [morgan](https://www.npmjs.com/package/morgan)
-
-
-Do you want me to also include a **minimal usage example** (e.g., how to connect with a WebSocket client in Node.js or browser) in the README?
-```
