@@ -17,7 +17,10 @@ function onConnection(ws, req) {
 }
 
 module.exports = (server) => {
-    const wss = new WebSocket.Server({server});
+    const wss = new WebSocket.Server({
+        server,
+        verifyClient
+    });
     wss.on('connection', onConnection);
     wss.broadcast = broadcast;
 
@@ -32,4 +35,15 @@ function broadcast(jsonObject) {
             client.send(JSON.stringify(jsonObject));
         }
     });
+}
+
+function corsValidation(origin) {
+    return process.env.CORS_ORIGIN === '*' || process.env.CORS_ORIGIN.startsWith(origin);
+}
+
+function verifyClient(info, callback) {
+    if (!corsValidation(info.origin)) return callback(false);
+    
+    const token = info.req.url.split('token=')[1];
+    return token === '123456' ? callback(true) : callback(false);
 }
